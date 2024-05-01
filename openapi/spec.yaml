@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Single Endpoint API
+  version: 1.0.0
+paths:
+  /data:
+    post:
+      summary: Get data from external provider for a custom time range
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                starts_at:
+                  type: string
+                  format: date-time
+                  description: The start date and time in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+                ends_at:
+                  type: string
+                  format: date-time
+                  description: The end date and time in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier of the item
+                    name:
+                      type: string
+                      description: The name of the item
+        'default':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
